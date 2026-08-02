@@ -1,13 +1,12 @@
-package com.example.customerservice.Model.Dto;
+package com.example.customerservice.resource.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 
-public record UserCreationDto(
+public record UserCreationResource(
 
         @NotBlank(message = "enter your first name please")
         String firstName,
+
         @NotBlank(message = "enter your last name please")
         String lastName,
 
@@ -18,6 +17,9 @@ public record UserCreationDto(
         @Email(message = "enter a valid email please")
         String email,
 
-        byte age
+        @NotNull(message = "enter an email")
+        @Min(value = 18)
+        @Max(value = 100)
+        int age
 ) {
 }

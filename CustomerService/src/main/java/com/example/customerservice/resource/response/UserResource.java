@@ -1,8 +1,8 @@
-package com.example.customerservice.Model.Dto;
+package com.example.customerservice.resource.response;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record UserDto(
+public record UserResource(
         @NotBlank(message = "enter id")
         Long id,
         String userName,

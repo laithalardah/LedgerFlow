@@ -1,11 +1,9 @@
-package com.example.customerservice.Model.Entity;
+package com.example.customerservice.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.naming.Name;
 
 
 @Data
@@ -13,7 +11,7 @@ import javax.naming.Name;
 @AllArgsConstructor
 @Table(name = "users")
 @Entity
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +26,10 @@ public class User {
     @Column(name = "user_name" , unique = true , nullable = false)
     private String userName;
 
+    @Column(name = "email" , unique = true , nullable = false)
     private String email;
 
-    //byte is smaller than int and age is less than 255
-    private byte age = 18;
+    @Min(value = 18)
+    @Max(value = 100)
+    private int age = 18;
 }
