@@ -16,9 +16,15 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<String> handleDataIntegrityException(DataIntegrityViolationException ex) {
-        return new ResponseEntity<>("username or email already available , use other ones"
-                , HttpStatus.CONFLICT);
+    public ResponseEntity<Map<String , Object>> handleDataIntegrityException(DataIntegrityViolationException ex) {
+
+        Map<String , Object> body = new HashMap<>();
+
+        body.put("status", HttpStatus.CONFLICT.value());
+        body.put("error", "Username or Email already exists");
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -28,7 +34,7 @@ public class GlobalExceptionHandler {
 
         body.put("status", HttpStatus.NOT_FOUND.value());
         body.put("error", "Not Found");
-        body.put("message", ex.getMessage()); // Will display: "User not found with ID: [id]"
+        body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
