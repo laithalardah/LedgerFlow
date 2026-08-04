@@ -31,5 +31,5 @@ public class UserEntity {
 
     @Min(value = 18)
     @Max(value = 100)
-    private int age = 18;
+    private Integer age = 18;
 }

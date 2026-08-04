@@ -11,17 +11,13 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    UserEntity toUserEntity(UserModel userModel);
-
     @Mapping(target = "id" , ignore = true)
     UserEntity toUserEntity(UserCreationModel userCreationModel);
 
     UserCreationModel toUserCreationModel(UserCreationResource userCreationResource);
 
     UserResource toUserResource(UserModel userModel);
-
-    UserModel toUserModel(UserResource userResource);
-
+    
     UserModel toUserModel(UserEntity user);
 
 

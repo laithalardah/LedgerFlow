@@ -6,6 +6,7 @@ public record UserModel(
         String userName,
         String firstName,
         String lastName,
-        String email
+        String email,
+        Integer age
 ) {
 }

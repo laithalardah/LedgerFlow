@@ -6,6 +6,6 @@ public record UserCreationModel(
         String lastName,
         String userName,
         String email,
-        int age
+        Integer age
 ) {
 }

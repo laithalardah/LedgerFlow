@@ -7,6 +7,7 @@ public record UserCreationResource(
         @NotBlank(message = "enter your first name please")
         String firstName,
 
+        @NotNull(message = "enter your last name please")
         @NotBlank(message = "enter your last name please")
         String lastName,
 
@@ -17,9 +18,9 @@ public record UserCreationResource(
         @Email(message = "enter a valid email please")
         String email,
 
-        @NotNull(message = "enter an email")
+        @NotNull(message = "enter your age")
         @Min(value = 18)
         @Max(value = 100)
-        int age
+        Integer age
 ) {
 }
