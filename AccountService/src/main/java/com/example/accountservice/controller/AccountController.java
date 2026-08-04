@@ -5,10 +5,10 @@ import com.example.accountservice.mapper.UserMapper;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
-import com.example.accountservice.resource.AccountCreationResource;
-import com.example.accountservice.resource.AccountResource;
-import com.example.accountservice.resource.AmountRequest;
-import com.example.accountservice.resource.UserResource;
+import com.example.accountservice.resource.request.AccountCreationResource;
+import com.example.accountservice.resource.response.AccountResource;
+import com.example.accountservice.resource.request.AmountRequest;
+import com.example.accountservice.resource.response.UserResource;
 import com.example.accountservice.service.AccountService;
 import com.example.accountservice.service.impl.AccountServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,14 +55,16 @@ public class AccountController {
 
     @Operation(description = "WithDraw from Account")
     @PostMapping("/withdraw/{accountNumber}")
-    public ResponseEntity<AccountResource> WithDraw(@PathVariable Long accountNumber ,@RequestBody @Valid AmountRequest request) {
+    public ResponseEntity<AccountResource> WithDraw(@PathVariable Long accountNumber ,
+                                                    @RequestBody @Valid AmountRequest request) {
 
         return ResponseEntity.ok(accountMapper.toAccountResource(accountService.withDraw(accountNumber , request)));
     }
 
     @Operation(description = "Deposit into Account")
     @PostMapping("/deposit/{accountNumber}")
-    public ResponseEntity<AccountResource> Deposit(@PathVariable Long accountNumber ,@RequestBody @Valid AmountRequest request) {
+    public ResponseEntity<AccountResource> Deposit(@PathVariable Long accountNumber ,
+                                                   @RequestBody @Valid AmountRequest request) {
 
         return ResponseEntity.ok(accountMapper.toAccountResource(accountService.deposit(accountNumber , request)));
     }

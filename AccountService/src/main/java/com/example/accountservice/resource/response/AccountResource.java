@@ -1,4 +1,4 @@
-package com.example.accountservice.resource;
+package com.example.accountservice.resource.response;
 
 import com.example.accountservice.enums.AccountType;
 

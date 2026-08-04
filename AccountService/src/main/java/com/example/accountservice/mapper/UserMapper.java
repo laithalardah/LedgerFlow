@@ -1,7 +1,7 @@
 package com.example.accountservice.mapper;
 
 import com.example.accountservice.model.UserModel;
-import com.example.accountservice.resource.UserResource;
+import com.example.accountservice.resource.response.UserResource;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

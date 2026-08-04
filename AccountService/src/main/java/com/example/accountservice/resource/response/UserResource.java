@@ -1,4 +1,4 @@
-package com.example.accountservice.resource;
+package com.example.accountservice.resource.response;
 
 public record UserResource(
         Long id,

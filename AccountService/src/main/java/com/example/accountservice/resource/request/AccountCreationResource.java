@@ -1,4 +1,4 @@
-package com.example.accountservice.resource;
+package com.example.accountservice.resource.request;
 
 import com.example.accountservice.enums.AccountType;
 import jakarta.validation.constraints.NotBlank;

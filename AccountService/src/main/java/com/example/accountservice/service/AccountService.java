@@ -3,7 +3,7 @@ package com.example.accountservice.service;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
-import com.example.accountservice.resource.AmountRequest;
+import com.example.accountservice.resource.request.AmountRequest;
 
 import java.math.BigDecimal;
 import java.util.List;

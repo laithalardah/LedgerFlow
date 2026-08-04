@@ -3,8 +3,8 @@ package com.example.accountservice.mapper;
 import com.example.accountservice.entity.AccountEntity;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
-import com.example.accountservice.resource.AccountCreationResource;
-import com.example.accountservice.resource.AccountResource;
+import com.example.accountservice.resource.request.AccountCreationResource;
+import com.example.accountservice.resource.response.AccountResource;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,4 +1,4 @@
-package com.example.accountservice.resource;
+package com.example.accountservice.resource.request;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;

@@ -11,7 +11,7 @@ import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
 import com.example.accountservice.repository.AccountRepository;
-import com.example.accountservice.resource.AmountRequest;
+import com.example.accountservice.resource.request.AmountRequest;
 import com.example.accountservice.service.AccountService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
