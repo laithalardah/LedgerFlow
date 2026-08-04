@@ -6,15 +6,15 @@ import jakarta.validation.constraints.NotNull;
 
 public record AccountCreationResource(
 
-        @NotNull
+        @NotNull(message = "userId should not be empty")
         Long userId,
 
-        @NotBlank
-        @NotNull
+        @NotBlank(message = "accountType should not be Blank")
+        @NotNull(message = "accountType should not be Null")
         AccountType accountType,
 
-        @NotBlank
-        @NotNull
+        @NotBlank(message = "currencySymbol should not be Blank")
+        @NotNull(message = "currencySymbol should not be Null")
         String currencySymbol
 ) {
 }

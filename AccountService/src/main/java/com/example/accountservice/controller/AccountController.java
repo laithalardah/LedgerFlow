@@ -55,14 +55,14 @@ public class AccountController {
 
     @Operation(description = "WithDraw from Account")
     @PostMapping("/withdraw/{accountNumber}")
-    public ResponseEntity<AccountResource> WithDraw(@PathVariable Long accountNumber , @Valid AmountRequest request) {
+    public ResponseEntity<AccountResource> WithDraw(@PathVariable Long accountNumber ,@RequestBody @Valid AmountRequest request) {
 
         return ResponseEntity.ok(accountMapper.toAccountResource(accountService.withDraw(accountNumber , request)));
     }
 
     @Operation(description = "Deposit into Account")
     @PostMapping("/deposit/{accountNumber}")
-    public ResponseEntity<AccountResource> Deposit(@PathVariable Long accountNumber , @Valid AmountRequest request) {
+    public ResponseEntity<AccountResource> Deposit(@PathVariable Long accountNumber ,@RequestBody @Valid AmountRequest request) {
 
         return ResponseEntity.ok(accountMapper.toAccountResource(accountService.deposit(accountNumber , request)));
     }
