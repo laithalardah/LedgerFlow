@@ -1,9 +1,6 @@
 package com.example.accountservice.exception;
 
 import lombok.Data;
-import lombok.Setter;
-import lombok.Value;
-
 import java.time.LocalDateTime;
 
 @Data

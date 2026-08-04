@@ -8,5 +8,4 @@ import org.mapstruct.Mapper;
 public interface UserMapper {
 
     UserResource toUserResource(UserModel userModel);
-    UserModel toUserModel(UserResource userResource);
 }

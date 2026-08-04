@@ -3,7 +3,6 @@ package com.example.accountservice.entity;
 
 import com.example.accountservice.enums.AccountType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,16 +22,17 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountNumber;
 
+    @Column(precision = 19, scale = 4, nullable = false)
     private BigDecimal balance = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
     @NotNull
-    Currency currency;
+    private Currency currency;
 
-    @NotBlank
-    @NotBlank
+    @Column(name = "user_id")
+    @NotNull
     Long userId;
 
 }

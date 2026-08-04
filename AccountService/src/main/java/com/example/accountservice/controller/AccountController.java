@@ -7,7 +7,9 @@ import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
 import com.example.accountservice.resource.AccountCreationResource;
 import com.example.accountservice.resource.AccountResource;
+import com.example.accountservice.resource.AmountRequest;
 import com.example.accountservice.resource.UserResource;
+import com.example.accountservice.service.AccountService;
 import com.example.accountservice.service.impl.AccountServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -17,13 +19,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
 
-    private final AccountServiceImpl accountService;
+    private final AccountService accountService;
     private final AccountMapper accountMapper;
     private final UserMapper userMapper;
 
@@ -54,16 +55,16 @@ public class AccountController {
 
     @Operation(description = "WithDraw from Account")
     @PostMapping("/withdraw/{accountNumber}")
-    public ResponseEntity<AccountResource> WithDraw(@PathVariable Long accountNumber , @RequestBody Map<String , BigDecimal> request) {
+    public ResponseEntity<AccountResource> WithDraw(@PathVariable Long accountNumber , @Valid AmountRequest request) {
 
-        return ResponseEntity.ok(accountMapper.toAccountResource(accountService.WithDraw(accountNumber , request)));
+        return ResponseEntity.ok(accountMapper.toAccountResource(accountService.withDraw(accountNumber , request)));
     }
 
     @Operation(description = "Deposit into Account")
     @PostMapping("/deposit/{accountNumber}")
-    public ResponseEntity<AccountResource> Deposit(@PathVariable Long accountNumber , @RequestBody Map<String , BigDecimal> request) {
+    public ResponseEntity<AccountResource> Deposit(@PathVariable Long accountNumber , @Valid AmountRequest request) {
 
-        return ResponseEntity.ok(accountMapper.toAccountResource(accountService.Deposit(accountNumber , request)));
+        return ResponseEntity.ok(accountMapper.toAccountResource(accountService.deposit(accountNumber , request)));
     }
 
     @Operation(description = "Get All Accounts of a Specific User")

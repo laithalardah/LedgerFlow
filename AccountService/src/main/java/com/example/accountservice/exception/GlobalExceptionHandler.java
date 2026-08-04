@@ -57,6 +57,31 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error , HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(InvalidCurrencyException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCurrency(InvalidCurrencyException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "Invalid currency",
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<>(error , HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CustomerServiceUnavailableException.class)
+    public ResponseEntity<ErrorResponse> handleCustomerServiceUnavailable(CustomerServiceUnavailableException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.BAD_GATEWAY.value(),
+                "customer service unavailable",
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<>(error , HttpStatus.BAD_GATEWAY);
+    }
+
+
 
 
 

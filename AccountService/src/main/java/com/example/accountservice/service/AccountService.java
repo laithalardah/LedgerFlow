@@ -3,10 +3,11 @@ package com.example.accountservice.service;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
+import com.example.accountservice.resource.AmountRequest;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
+
 
 public interface AccountService {
 
@@ -16,9 +17,9 @@ public interface AccountService {
 
     BigDecimal getAccountBalance(Long accountNumber);
 
-    AccountModel Deposit(Long accountNumber , Map<String , BigDecimal> request);
+    AccountModel deposit(Long accountNumber , AmountRequest request);
 
-    AccountModel WithDraw(Long accountNumber , Map<String , BigDecimal> request);
+    AccountModel withDraw(Long accountNumber , AmountRequest request);
 
     UserModel getAccountUserInfo(Long accountNumber);
 }

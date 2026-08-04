@@ -1,7 +1,7 @@
 package com.example.accountservice.mapper;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import com.example.accountservice.exception.InvalidCurrencyException;
+
 
 import java.util.Currency;
 
@@ -15,7 +15,7 @@ public class CurrencyMapper {
         try {
             currency = Currency.getInstance(currencySymbol);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND , "not valid currency");
+            throw new InvalidCurrencyException("no currency with symbol " + currencySymbol);
         }
 
         return currency;

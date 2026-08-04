@@ -5,12 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record AccountCreationResource(
+
         @NotNull
-        @NotBlank
         Long userId,
+
         @NotBlank
         @NotNull
         AccountType accountType,
+
         @NotBlank
         @NotNull
         String currencySymbol

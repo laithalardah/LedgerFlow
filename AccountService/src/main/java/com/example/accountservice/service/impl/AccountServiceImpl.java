@@ -6,22 +6,20 @@ import com.example.accountservice.exception.InsufficientBalanceException;
 import com.example.accountservice.exception.InvalidAmountArgumentException;
 import com.example.accountservice.mapper.AccountMapper;
 import com.example.accountservice.mapper.CurrencyMapper;
-import com.example.accountservice.Utils.CustomerClient;
+import com.example.accountservice.client.CustomerClient;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
 import com.example.accountservice.repository.AccountRepository;
+import com.example.accountservice.resource.AmountRequest;
 import com.example.accountservice.service.AccountService;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
-import java.util.Map;
+
 
 
 @Service
@@ -41,6 +39,10 @@ public class AccountServiceImpl implements AccountService {
 
 
     //mapped the currency string to a currency object.
+    /* this will cause load on the jdbc connection pool, it is better to call customer client before the transaction.
+    Real production software probably uses jwt and validate it in api gateway or something , user id should not be
+    sent via JSON or request .*/
+
     @Override
     @Transactional
     public AccountModel createAccount(AccountCreationModel accountCreationModel) {
@@ -63,6 +65,7 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public BigDecimal getAccountBalance(Long accountNumber) {
 
         AccountEntity userAccount =  accountRepository.findById(accountNumber).
@@ -74,12 +77,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public AccountModel Deposit(Long accountNumber , Map<String, BigDecimal> request) {
+    public AccountModel deposit(Long accountNumber , AmountRequest request) {
         AccountEntity account = accountRepository.findById(accountNumber).
                 orElseThrow(() -> new AccountNotFoundException("account with number "
                         + accountNumber + " was not found"));
 
-        BigDecimal amount = request.get("amount");
+        BigDecimal amount = request.amount();
+
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new InvalidAmountArgumentException("cannot deposit an amount with value less than or equal to zero");
         }
@@ -95,13 +99,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public AccountModel WithDraw(Long accountNumber , Map<String, BigDecimal> request) {
+    public AccountModel withDraw(Long accountNumber , AmountRequest request) {
 
         AccountEntity account = accountRepository.findById(accountNumber).
                 orElseThrow(() -> new AccountNotFoundException("account with number "
                         + accountNumber + " was not found"));
 
-        BigDecimal amount = request.get("amount");
+        BigDecimal amount = request.amount();
+
         if(amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new InvalidAmountArgumentException("cannot withdraw an amount with value less than or equal to zero");
         }
@@ -122,6 +127,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserModel getAccountUserInfo(Long accountNumber) {
         AccountEntity account = accountRepository.findById(accountNumber).
                 orElseThrow(() -> new AccountNotFoundException("account with number "
@@ -131,6 +137,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AccountModel> getUserAccounts(Long userId) {
         List<AccountEntity> userAccounts = accountRepository.findAllByUserId(userId);
 

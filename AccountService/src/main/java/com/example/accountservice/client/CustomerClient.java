@@ -1,11 +1,12 @@
-package com.example.accountservice.Utils;
+package com.example.accountservice.client;
 
+import com.example.accountservice.exception.CustomerServiceUnavailableException;
 import com.example.accountservice.exception.UserNotFoundException;
 import com.example.accountservice.model.UserModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class CustomerClient {
@@ -21,8 +22,11 @@ public class CustomerClient {
         try {
             return restTemplate.getForObject(customer_service_url , UserModel.class);
         }
-        catch (Exception e) {
+        catch (HttpClientErrorException.NotFound e) {
             throw new UserNotFoundException("error trying to get user info");
+        }
+        catch (RestClientException e) {
+            throw new CustomerServiceUnavailableException("customer service unavailable");
         }
     }
 }
