@@ -1,9 +1,11 @@
 package com.example.accountservice.service;
 
+import com.example.accountservice.command.ProcessTransferCommand;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
 import com.example.accountservice.resource.request.AmountRequest;
+import com.example.accountservice.resource.response.AccountValidationResponse;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,4 +24,8 @@ public interface AccountService {
     AccountModel withDraw(Long accountNumber , AmountRequest request);
 
     UserModel getAccountUserInfo(Long accountNumber);
+
+    AccountValidationResponse validateAccount(Long accountNumber);
+
+    void ProcessTransfer(ProcessTransferCommand processTransferCommand);
 }

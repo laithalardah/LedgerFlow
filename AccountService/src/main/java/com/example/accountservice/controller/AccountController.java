@@ -8,6 +8,7 @@ import com.example.accountservice.model.UserModel;
 import com.example.accountservice.resource.request.AccountCreationResource;
 import com.example.accountservice.resource.response.AccountResource;
 import com.example.accountservice.resource.request.AmountRequest;
+import com.example.accountservice.resource.response.AccountValidationResponse;
 import com.example.accountservice.resource.response.UserResource;
 import com.example.accountservice.service.AccountService;
 import com.example.accountservice.service.impl.AccountServiceImpl;
@@ -87,6 +88,13 @@ public class AccountController {
         UserModel userModel = accountService.getAccountUserInfo(accountNumber);
 
         return ResponseEntity.ok(userMapper.toUserResource(userModel));
+    }
+
+    @Operation(description = "Checks if the Account Number corresponds to a valid Account, Returns Currency and Account Number")
+    @GetMapping("/{accountNumber}/validate")
+    public ResponseEntity<AccountValidationResponse> validateAccount(@PathVariable Long accountNumber) {
+
+        return ResponseEntity.ok(accountService.validateAccount(accountNumber));
     }
 
 }

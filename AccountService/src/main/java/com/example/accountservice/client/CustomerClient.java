@@ -3,6 +3,7 @@ package com.example.accountservice.client;
 import com.example.accountservice.exception.CustomerServiceUnavailableException;
 import com.example.accountservice.exception.UserNotFoundException;
 import com.example.accountservice.model.UserModel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
@@ -13,12 +14,15 @@ public class CustomerClient {
 
     private final RestTemplate restTemplate;
 
+    @Value("${customer-service.url}")
+    private String CUSTOMER_SERVICE_URL_PREFIX;
+
     CustomerClient (RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     public UserModel getUserInfo(Long userId) {
-        String customer_service_url = "http://localhost:8080/users/"+userId;
+        String customer_service_url = CUSTOMER_SERVICE_URL_PREFIX + userId;
         try {
             return restTemplate.getForObject(customer_service_url , UserModel.class);
         }

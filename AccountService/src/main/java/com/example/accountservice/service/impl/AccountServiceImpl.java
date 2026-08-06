@@ -1,17 +1,22 @@
 package com.example.accountservice.service.impl;
 
+import com.example.accountservice.command.ProcessTransferCommand;
 import com.example.accountservice.entity.AccountEntity;
+import com.example.accountservice.event.TransferCompleted;
+import com.example.accountservice.event.TransferFailed;
 import com.example.accountservice.exception.AccountNotFoundException;
 import com.example.accountservice.exception.InsufficientBalanceException;
 import com.example.accountservice.exception.InvalidAmountArgumentException;
 import com.example.accountservice.mapper.AccountMapper;
 import com.example.accountservice.mapper.CurrencyMapper;
 import com.example.accountservice.client.CustomerClient;
+import com.example.accountservice.messaging.TransferEventPublisher;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
 import com.example.accountservice.repository.AccountRepository;
 import com.example.accountservice.resource.request.AmountRequest;
+import com.example.accountservice.resource.response.AccountValidationResponse;
 import com.example.accountservice.service.AccountService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -28,13 +33,15 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
     private final CustomerClient customerClient;
+    private final TransferEventPublisher transferEventPublisher;
 
 
     AccountServiceImpl(AccountRepository accountRepository , AccountMapper accountMapper ,
-                       CustomerClient customerClient){
+                       CustomerClient customerClient , TransferEventPublisher transferEventPublisher ){
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
         this.customerClient = customerClient;
+        this.transferEventPublisher = transferEventPublisher;
     }
 
 
@@ -134,6 +141,47 @@ public class AccountServiceImpl implements AccountService {
                         + accountNumber + " was not found"));
 
         return customerClient.getUserInfo(account.getUserId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AccountValidationResponse validateAccount(Long accountNumber) {
+
+        AccountEntity account = accountRepository.findById(accountNumber).
+                orElseThrow(() -> new AccountNotFoundException("account with number "
+                        + accountNumber + " was not found"));
+
+        return new AccountValidationResponse(account.getAccountNumber() , account.getCurrency());
+    }
+
+    @Override
+    @Transactional
+    public void ProcessTransfer(ProcessTransferCommand processTransferCommand) {
+        try {
+
+            // we already made sure that accounts exists
+
+            AmountRequest amount = new AmountRequest(processTransferCommand.amount());
+
+            withDraw(processTransferCommand.creditorAccountNumber() , amount);
+
+            deposit(processTransferCommand.creditorAccountNumber() , amount);
+
+            transferEventPublisher.completed(new TransferCompleted(
+                    processTransferCommand.transferId(),
+                    processTransferCommand.amount()
+            ));
+
+
+        }
+        catch(Exception e) {
+
+            transferEventPublisher.failed(new TransferFailed(
+                    processTransferCommand.transferId(),
+                    e.getMessage()
+            ));
+
+        }
     }
 
     @Override
