@@ -33,6 +33,9 @@ public class AccountEntity {
 
     @Column(name = "user_id")
     @NotNull
-    Long userId;
+    private Long userId;
+
+    @Version
+    private Long version;
 
 }

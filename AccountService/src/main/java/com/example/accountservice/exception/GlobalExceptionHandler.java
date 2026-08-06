@@ -1,6 +1,7 @@
 package com.example.accountservice.exception;
 
 
+import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -103,6 +104,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(OptimisticEntityLockException.class)
+    public ResponseEntity<ErrorResponse> handleOptimisticEntityLock(OptimisticEntityLockException ex){
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                "Accessed Row Concurrently",
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<>(error , HttpStatus.CONFLICT);
+    }
 }
 
 
