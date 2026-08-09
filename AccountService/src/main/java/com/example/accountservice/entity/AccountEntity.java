@@ -22,17 +22,12 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountNumber;
 
-    @Column(precision = 19, scale = 4, nullable = false)
     private BigDecimal balance = BigDecimal.ZERO;
 
-    @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    @NotNull
     private Currency currency;
 
-    @Column(name = "user_id")
-    @NotNull
     private Long userId;
 
     @Version
