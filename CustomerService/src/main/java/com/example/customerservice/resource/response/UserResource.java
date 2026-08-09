@@ -1,6 +1,5 @@
 package com.example.customerservice.resource.response;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record UserResource(
