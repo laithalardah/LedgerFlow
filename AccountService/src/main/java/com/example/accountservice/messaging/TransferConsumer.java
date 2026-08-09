@@ -15,7 +15,7 @@ public class TransferConsumer {
         this.accountService = accountService;
     }
 
-    @JmsListener(destination = "${process-trasnfer-queue}")
+    @JmsListener(destination = "${process-transfer-queue}")
     public void consume(ProcessTransferCommand processTransferCommand) {
 
         accountService.ProcessTransfer(processTransferCommand);
