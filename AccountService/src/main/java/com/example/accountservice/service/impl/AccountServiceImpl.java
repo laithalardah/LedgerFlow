@@ -18,6 +18,7 @@ import com.example.accountservice.repository.AccountRepository;
 import com.example.accountservice.resource.request.AmountRequest;
 import com.example.accountservice.resource.response.AccountValidationResponse;
 import com.example.accountservice.service.AccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ import java.util.Currency;
 import java.util.List;
 
 
-
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -53,13 +54,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public AccountModel createAccount(AccountCreationModel accountCreationModel) {
-
+        log.info("Checking User Validity");
         UserModel userModel = customerClient.getUserInfo(accountCreationModel.userId());
 
+        log.info("Checking Currency Validity");
         String currencySymbol = accountCreationModel.currencySymbol();
 
         Currency currency = CurrencyMapper.currencySymbolMapping(currencySymbol);
 
+        log.info("Creating Account..");
         AccountEntity newAccount = accountMapper.toAccountEntity(accountCreationModel);
 
         newAccount.setUserId(userModel.id());

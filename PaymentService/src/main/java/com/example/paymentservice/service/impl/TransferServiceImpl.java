@@ -14,9 +14,11 @@ import com.example.paymentservice.repository.IdempotentKeyRepository;
 import com.example.paymentservice.repository.TransferRepository;
 import com.example.paymentservice.service.AccountValidationService;
 import com.example.paymentservice.service.TransferService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 public class TransferServiceImpl implements TransferService {
 
@@ -49,6 +51,7 @@ public class TransferServiceImpl implements TransferService {
             throw new DuplicateRequestException("Request already made");
         }
 
+        log.info("Created New Request..");
         idempotentKeyRepository.save(new IdempotentKey(key));
 
         if(transferCreationModel.debtorAccountNumber().equals(transferCreationModel.creditorAccountNumber()))

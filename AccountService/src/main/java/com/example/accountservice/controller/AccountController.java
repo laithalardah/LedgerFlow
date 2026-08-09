@@ -14,6 +14,7 @@ import com.example.accountservice.service.AccountService;
 import com.example.accountservice.service.impl.AccountServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
@@ -39,6 +41,7 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<AccountResource> createAccount(@RequestBody @Valid AccountCreationResource accountCreationResource) {
 
+        log.info("Create Account Endpoint Invoked");
         AccountCreationModel accountCreationModel = accountMapper.toAccountCreationModel(accountCreationResource);
 
         AccountModel createdAccountModel = accountService.createAccount(accountCreationModel);

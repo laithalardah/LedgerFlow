@@ -1,7 +1,6 @@
 package com.example.paymentservice.resource;
 
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
@@ -9,10 +8,8 @@ import java.math.BigDecimal;
 public record TransferCreationResource(
 
         @NotNull(message = "Enter Source Account Number")
-        @NotBlank(message = "Enter Source Account Number")
         Long debtorAccountNumber,
 
-        @NotBlank(message = "Enter Target Account Number")
         @NotNull(message = "Enter Target Account number")
         Long creditorAccountNumber,
 

@@ -19,6 +19,7 @@ import java.util.Currency;
 public class AccountEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountNumber;
 
     private BigDecimal balance = BigDecimal.ZERO;

@@ -25,7 +25,7 @@ public class AccountClient {
 
     //Not sure about the design
     public AccountModel validateAccount(Long id) {
-        String endpoint = ACCOUNT_URL_PREFIX + "/account/" + id + "/validate";
+        String endpoint = ACCOUNT_URL_PREFIX + "/accounts/" + id + "/validate";
 
         try{
             return restTemplate.getForObject(endpoint , AccountModel.class);

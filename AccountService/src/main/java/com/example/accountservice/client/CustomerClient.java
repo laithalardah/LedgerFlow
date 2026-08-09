@@ -22,7 +22,7 @@ public class CustomerClient {
     }
 
     public UserModel getUserInfo(Long userId) {
-        String customer_service_url = CUSTOMER_SERVICE_URL_PREFIX + userId;
+        String customer_service_url = CUSTOMER_SERVICE_URL_PREFIX +"/users/" + userId;
         try {
             return restTemplate.getForObject(customer_service_url , UserModel.class);
         }
@@ -30,7 +30,10 @@ public class CustomerClient {
             throw new UserNotFoundException("error trying to get user info");
         }
         catch (RestClientException e) {
-            throw new CustomerServiceUnavailableException("customer service unavailable");
+            e.printStackTrace();
+            throw new CustomerServiceUnavailableException(
+                    "Customer service unavailable: " + e.getMessage()
+            );
         }
     }
 }

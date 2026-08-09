@@ -8,8 +8,7 @@ public record AccountCreationResource(
 
         @NotNull(message = "userId should not be empty")
         Long userId,
-
-        @NotBlank(message = "accountType should not be Blank")
+        
         @NotNull(message = "accountType should not be Null")
         AccountType accountType,
 

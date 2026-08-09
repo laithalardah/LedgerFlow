@@ -7,11 +7,13 @@ import com.example.paymentservice.model.TransferModel;
 import com.example.paymentservice.service.TransferService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.paymentservice.resource.TransferCreationResource;
 import com.example.paymentservice.resource.TransferResource;
 
+@Slf4j
 @RestController
 @RequestMapping("/trasnfer")
 public class TransferController {
@@ -26,9 +28,10 @@ public class TransferController {
 
     @Operation(description = "Creates a New Transfer , requires Idempotency key with Headers")
     @PostMapping("/")
-    public ResponseEntity<TransferResource> createTransfer(@Valid TransferCreationResource transferCreationResource ,
+    public ResponseEntity<TransferResource> createTransfer(@RequestBody @Valid TransferCreationResource transferCreationResource ,
                                                            @RequestHeader("x-Idemptoency-key") Long key) {
 
+        log.info("Create Transfer Endpoint Invoked");
         TransferCreationModel transferCreationModel = transferMapper.toTransferCreationModel(transferCreationResource);
 
         TransferModel createdTransferModel = transferService.createTransfer(transferCreationModel , key);

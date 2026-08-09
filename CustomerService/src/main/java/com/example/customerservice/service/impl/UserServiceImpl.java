@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
         log.info("Creating user..");
         UserEntity user = userMapper.toUserEntity(userCreationModel);
 
+        log.info("buggasdfsad");
         UserEntity savedUser = userRepository.save(user);
 
         log.info("User Created!");
