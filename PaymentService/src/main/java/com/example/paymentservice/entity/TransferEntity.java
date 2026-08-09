@@ -1,0 +1,28 @@
+package com.example.paymentservice.entity;
+
+
+import com.example.paymentservice.enums.Status;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+@Data
+@Entity
+@Table(name = "transfers")
+public class TransferEntity {
+
+    @Id
+    private Long id;
+
+    private Long debtorAccountNumber;
+
+    private Long creditorAccountNumber;
+
+    private BigDecimal amount;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.PENDING;
+}
