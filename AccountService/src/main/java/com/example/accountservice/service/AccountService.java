@@ -1,6 +1,6 @@
 package com.example.accountservice.service;
 
-import com.example.accountservice.command.ProcessTransferCommand;
+import com.example.accountservice.messaging.command.ProcessTransferCommand;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;

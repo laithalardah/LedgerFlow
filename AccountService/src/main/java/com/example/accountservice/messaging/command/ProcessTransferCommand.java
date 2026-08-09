@@ -1,4 +1,4 @@
-package com.example.accountservice.command;
+package com.example.accountservice.messaging.command;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

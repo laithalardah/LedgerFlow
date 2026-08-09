@@ -1,4 +1,4 @@
-package com.example.accountservice.event;
+package com.example.accountservice.messaging.event;
 
 public record TransferFailed(
         Long transferId,

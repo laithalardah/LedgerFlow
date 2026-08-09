@@ -1,9 +1,9 @@
 package com.example.accountservice.service.impl;
 
-import com.example.accountservice.command.ProcessTransferCommand;
+import com.example.accountservice.messaging.command.ProcessTransferCommand;
 import com.example.accountservice.entity.AccountEntity;
-import com.example.accountservice.event.TransferCompleted;
-import com.example.accountservice.event.TransferFailed;
+import com.example.accountservice.messaging.event.TransferCompleted;
+import com.example.accountservice.messaging.event.TransferFailed;
 import com.example.accountservice.exception.AccountNotFoundException;
 import com.example.accountservice.exception.InsufficientBalanceException;
 import com.example.accountservice.exception.InvalidAmountArgumentException;

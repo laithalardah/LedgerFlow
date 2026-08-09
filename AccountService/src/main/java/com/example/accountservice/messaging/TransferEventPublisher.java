@@ -1,7 +1,7 @@
 package com.example.accountservice.messaging;
 
-import com.example.accountservice.event.TransferCompleted;
-import com.example.accountservice.event.TransferFailed;
+import com.example.accountservice.messaging.event.TransferCompleted;
+import com.example.accountservice.messaging.event.TransferFailed;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class TransferEventPublisher {
     public void completed(TransferCompleted event) {
 
         jmsTemplate.convertAndSend(
-                "transfer-completed",
+                "${transfer-completed-queue}",
                 event
         );
 
@@ -29,7 +29,7 @@ public class TransferEventPublisher {
     public void failed(TransferFailed event) {
 
         jmsTemplate.convertAndSend(
-                "transfer-failed",
+                "${transfer-failed-queue}",
                 event
         );
 

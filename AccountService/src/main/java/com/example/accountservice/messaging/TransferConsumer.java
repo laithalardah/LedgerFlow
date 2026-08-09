@@ -1,6 +1,6 @@
 package com.example.accountservice.messaging;
 
-import com.example.accountservice.command.ProcessTransferCommand;
+import com.example.accountservice.messaging.command.ProcessTransferCommand;
 import com.example.accountservice.service.AccountService;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ public class TransferConsumer {
         this.accountService = accountService;
     }
 
-    @JmsListener(destination = "process-transfer")
+    @JmsListener(destination = "${process-trasnfer-queue}")
     public void consume(ProcessTransferCommand processTransferCommand) {
 
         accountService.ProcessTransfer(processTransferCommand);
