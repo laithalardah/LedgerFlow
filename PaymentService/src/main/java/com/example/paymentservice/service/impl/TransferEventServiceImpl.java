@@ -6,11 +6,12 @@ import com.example.paymentservice.exception.InvalidTransferException;
 import com.example.paymentservice.messaging.event.TransferCompleted;
 import com.example.paymentservice.messaging.event.TransferFailed;
 import com.example.paymentservice.repository.TransferRepository;
+import com.example.paymentservice.service.TransferEventService;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class TransferEventServiceImpl {
+public class TransferEventServiceImpl implements TransferEventService {
 
     private final TransferRepository transferRepository;
 

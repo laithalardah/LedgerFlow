@@ -70,6 +70,8 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepository.save(newAccount);
 
+        log.info("Account Created");
+
         return accountMapper.toAccountModel(newAccount);
     }
 
@@ -78,6 +80,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(readOnly = true)
     public BigDecimal getAccountBalance(Long accountNumber) {
 
+        log.info("Getting Balance...");
         AccountEntity userAccount =  accountRepository.findById(accountNumber).
                 orElseThrow(() -> new AccountNotFoundException("account with number "
                         + accountNumber + " was not found"));
@@ -88,21 +91,24 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public AccountModel deposit(Long accountNumber , AmountRequest request) {
+
+        log.info("Depositing...");
+
         AccountEntity account = accountRepository.findById(accountNumber).
                 orElseThrow(() -> new AccountNotFoundException("account with number "
                         + accountNumber + " was not found"));
 
         BigDecimal amount = request.amount();
 
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new InvalidAmountArgumentException("cannot deposit an amount with value less than or equal to zero");
-        }
 
         BigDecimal newBalance = account.getBalance().add(amount);
 
         account.setBalance(newBalance);
 
         accountRepository.save(account);
+
+        log.info("Depositing SuccessFully");
+
 
         return accountMapper.toAccountModel(account);
     }
@@ -111,15 +117,14 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public AccountModel withDraw(Long accountNumber , AmountRequest request) {
 
+        log.info("WithDrawing...");
+
+
         AccountEntity account = accountRepository.findById(accountNumber).
                 orElseThrow(() -> new AccountNotFoundException("account with number "
                         + accountNumber + " was not found"));
 
         BigDecimal amount = request.amount();
-
-        if(amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new InvalidAmountArgumentException("cannot withdraw an amount with value less than or equal to zero");
-        }
 
         BigDecimal accountBalance = account.getBalance();
 
@@ -130,6 +135,8 @@ public class AccountServiceImpl implements AccountService {
         BigDecimal newBalance = account.getBalance().subtract(amount);
 
         account.setBalance(newBalance);
+
+        log.info("WithDrawn Successfully");
 
         accountRepository.save(account);
 
@@ -150,9 +157,13 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(readOnly = true)
     public AccountValidationResponse validateAccount(Long accountNumber) {
 
+        log.info("Validating Accounts...");
+
         AccountEntity account = accountRepository.findById(accountNumber).
                 orElseThrow(() -> new AccountNotFoundException("account with number "
                         + accountNumber + " was not found"));
+
+        log.info("Account Validated");
 
         return new AccountValidationResponse(account.getAccountNumber() , account.getCurrency());
     }
@@ -165,8 +176,8 @@ public class AccountServiceImpl implements AccountService {
             // we already made sure that accounts exists
 
             AmountRequest amount = new AmountRequest(processTransferCommand.amount());
-
-            withDraw(processTransferCommand.creditorAccountNumber() , amount);
+            
+            withDraw(processTransferCommand.debtorAccountNumber() , amount);
 
             deposit(processTransferCommand.creditorAccountNumber() , amount);
 

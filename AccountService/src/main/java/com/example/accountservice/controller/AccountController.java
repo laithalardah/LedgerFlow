@@ -52,7 +52,7 @@ public class AccountController {
     @Operation(description = "return the balance of an account using the accountNumber")
     @GetMapping("/balance/{accountNumber}")
     public ResponseEntity<BigDecimal> getAccountBalance(@PathVariable Long accountNumber) {
-
+        log.info("Get Account balance endpoint invoked");
         return ResponseEntity.ok(accountService.getAccountBalance(accountNumber));
     }
 
@@ -61,6 +61,7 @@ public class AccountController {
     @PostMapping("/withdraw/{accountNumber}")
     public ResponseEntity<AccountResource> WithDraw(@PathVariable Long accountNumber ,
                                                     @RequestBody @Valid AmountRequest request) {
+        log.info("withDraw Endpoint invoked");
 
         return ResponseEntity.ok(accountMapper.toAccountResource(accountService.withDraw(accountNumber , request)));
     }
@@ -68,7 +69,9 @@ public class AccountController {
     @Operation(description = "Deposit into Account")
     @PostMapping("/deposit/{accountNumber}")
     public ResponseEntity<AccountResource> Deposit(@PathVariable Long accountNumber ,
+
                                                    @RequestBody @Valid AmountRequest request) {
+        log.info("deposit endpoints invoked");
 
         return ResponseEntity.ok(accountMapper.toAccountResource(accountService.deposit(accountNumber , request)));
     }
@@ -76,6 +79,8 @@ public class AccountController {
     @Operation(description = "Get All Accounts of a Specific User")
     @GetMapping("/{userId}")
     public ResponseEntity<List<AccountResource>> getUserAccounts(@PathVariable Long userId) {
+
+        log.info("getUserAccounts invoked");
 
         List<AccountResource> accountResources = accountService.getUserAccounts(userId).stream()
                 .map(accountMapper::toAccountResource)
@@ -88,6 +93,8 @@ public class AccountController {
     @GetMapping("/{accountNumber}/userInformation")
     public ResponseEntity<UserResource> getAccountUserInfo(@PathVariable Long accountNumber) {
 
+        log.info("getAccountUserInfo is invoked");
+
         UserModel userModel = accountService.getAccountUserInfo(accountNumber);
 
         return ResponseEntity.ok(userMapper.toUserResource(userModel));
@@ -97,7 +104,12 @@ public class AccountController {
     @GetMapping("/{accountNumber}/validate")
     public ResponseEntity<AccountValidationResponse> validateAccount(@PathVariable Long accountNumber) {
 
-        return ResponseEntity.ok(accountService.validateAccount(accountNumber));
+        log.info("Validate Account Endpoint in invoked");
+
+        AccountValidationResponse accountValidationResponse = accountService.validateAccount(accountNumber);
+
+        log.info("Sending Validation Response");
+        return ResponseEntity.ok(accountValidationResponse);
     }
 
 }

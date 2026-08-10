@@ -27,7 +27,7 @@ public class AccountValidationServiceImpl implements AccountValidationService {
     public void validateBalance(Long id , BigDecimal balance) {
 
         BigDecimal accountBalance = accountClient.getAccountBalance(id);
-        if(accountBalance.compareTo(balance) > 0)
+        if(accountBalance.compareTo(balance) < 0)
             throw new InsufficientBalanceException("Account does not have Sufficient Balance to complete Transfer");
     }
 

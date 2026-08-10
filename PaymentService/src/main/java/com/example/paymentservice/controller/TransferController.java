@@ -40,16 +40,16 @@ public class TransferController {
     }
 
     @Operation(description = "Get Transfer Status")
-    @GetMapping("/status")
-    public ResponseEntity<Status> getTransferStatus(Long id) {
-        return ResponseEntity.ok(transferService.getTransferStatus(id));
+    @GetMapping("/{transferId}/status")
+    public ResponseEntity<Status> getTransferStatus(@PathVariable Long transferId) {
+        return ResponseEntity.ok(transferService.getTransferStatus(transferId));
     }
 
     @Operation(description = "Get Transfer Details")
-    @GetMapping("/details")
-    public ResponseEntity<TransferResource> getTransferDetails(Long id) {
+    @GetMapping("/{transferId}/details")
+    public ResponseEntity<TransferResource> getTransferDetails(@PathVariable Long transferId) {
 
-        TransferModel transferModel = transferService.getTransferDetails(id);
+        TransferModel transferModel = transferService.getTransferDetails(transferId);
         return ResponseEntity.ok(transferMapper.toTransferResource(transferModel));
     }
 

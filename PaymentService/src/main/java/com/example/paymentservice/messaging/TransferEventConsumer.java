@@ -4,7 +4,9 @@ import com.example.paymentservice.messaging.event.TransferCompleted;
 import com.example.paymentservice.messaging.event.TransferFailed;
 import com.example.paymentservice.service.TransferEventService;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TransferEventConsumer {
 
     private final TransferEventService transferEventService;
