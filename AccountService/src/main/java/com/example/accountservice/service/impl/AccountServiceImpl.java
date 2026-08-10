@@ -173,10 +173,9 @@ public class AccountServiceImpl implements AccountService {
     public void ProcessTransfer(ProcessTransferCommand processTransferCommand) {
         try {
 
-            // we already made sure that accounts exists
-
+            // we already made sure that accounts exist
             AmountRequest amount = new AmountRequest(processTransferCommand.amount());
-            
+
             withDraw(processTransferCommand.debtorAccountNumber() , amount);
 
             deposit(processTransferCommand.creditorAccountNumber() , amount);
@@ -201,6 +200,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional(readOnly = true)
     public List<AccountModel> getUserAccounts(Long userId) {
+
+        log.info("Getting all User Accounts");
         List<AccountEntity> userAccounts = accountRepository.findAllByUserId(userId);
 
         return userAccounts.stream().

@@ -7,9 +7,11 @@ import com.example.paymentservice.messaging.event.TransferCompleted;
 import com.example.paymentservice.messaging.event.TransferFailed;
 import com.example.paymentservice.repository.TransferRepository;
 import com.example.paymentservice.service.TransferEventService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
+@Slf4j
 @Service
 public class TransferEventServiceImpl implements TransferEventService {
 
@@ -30,6 +32,7 @@ public class TransferEventServiceImpl implements TransferEventService {
         transferEntity.setStatus(Status.COMPLETE);
         transferRepository.save(transferEntity);
 
+        log.info("Transfer Status Successfully Updated to Completed");
         //send notification that its completed
     }
 
@@ -44,7 +47,7 @@ public class TransferEventServiceImpl implements TransferEventService {
         transferEntity.setStatus(Status.FAILED);
         transferRepository.save(transferEntity);
 
+        log.info("Transfer Status Successfully Updated to Failed");
         //send notification that it failed
     }
-
 }

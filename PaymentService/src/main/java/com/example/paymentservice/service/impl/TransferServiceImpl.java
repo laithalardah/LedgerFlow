@@ -15,6 +15,8 @@ import com.example.paymentservice.repository.TransferRepository;
 import com.example.paymentservice.service.AccountValidationService;
 import com.example.paymentservice.service.TransferService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,6 +84,9 @@ public class TransferServiceImpl implements TransferService {
     @Override
     @Transactional(readOnly = true)
     public Status getTransferStatus(Long id) {
+
+        log.info("Getting Transfer Status");
+
         TransferEntity transferEntity = transferRepository.findById(id)
                 .orElseThrow(() ->
                         new InvalidTransferException("Transfer Does Not Exist For some Reason"));
@@ -92,10 +97,22 @@ public class TransferServiceImpl implements TransferService {
     @Override
     @Transactional(readOnly = true)
     public TransferModel getTransferDetails(Long id) {
+
+        log.info("Getting Transfer Details");
+
         TransferEntity transferEntity = transferRepository.findById(id)
                 .orElseThrow(() ->
                         new InvalidTransferException("Transfer Does Not Exist For some Reason"));
 
         return transferMapper.toTransferModel(transferEntity);
+    }
+
+    @Override
+    public Page<TransferModel> getPreviousTransfers(Long accountNumber , Pageable pageable) {
+        log.info("Getting Previous Transfers");
+
+        return transferRepository.findAllByDebtorAccountNumberOrCreditorAccountNumber(accountNumber , accountNumber ,
+                        pageable)
+                .map(transferMapper :: toTransferModel);
     }
 }

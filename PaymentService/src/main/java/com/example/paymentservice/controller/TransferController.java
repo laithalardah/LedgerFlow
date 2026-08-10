@@ -8,14 +8,19 @@ import com.example.paymentservice.service.TransferService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.paymentservice.resource.TransferCreationResource;
 import com.example.paymentservice.resource.TransferResource;
+import org.springframework.data.domain.Pageable;
+
 
 @Slf4j
 @RestController
-@RequestMapping("/trasnfer")
+@RequestMapping("/trasnfers")
 public class TransferController {
 
     private final TransferMapper transferMapper;
@@ -42,6 +47,8 @@ public class TransferController {
     @Operation(description = "Get Transfer Status")
     @GetMapping("/{transferId}/status")
     public ResponseEntity<Status> getTransferStatus(@PathVariable Long transferId) {
+
+        log.info("Transfer Status Endpoint Invoked");
         return ResponseEntity.ok(transferService.getTransferStatus(transferId));
     }
 
@@ -49,8 +56,25 @@ public class TransferController {
     @GetMapping("/{transferId}/details")
     public ResponseEntity<TransferResource> getTransferDetails(@PathVariable Long transferId) {
 
+        log.info("Transfer Details Endpoint invoked");
+
         TransferModel transferModel = transferService.getTransferDetails(transferId);
         return ResponseEntity.ok(transferMapper.toTransferResource(transferModel));
+    }
+
+
+    @Operation(description = "Gets Previous Transfers")
+    @GetMapping("{accountNumber}")
+    public ResponseEntity<Page<TransferResource>> getPreviousTransfers(@PathVariable Long accountNumber,
+        @RequestParam(defaultValue = "0") int page ,
+        @RequestParam(defaultValue = "5") int size
+    ){
+        Pageable pageable = PageRequest.of(page , size , Sort.by("id").descending());
+
+        Page<TransferResource> transferResources = transferService.getPreviousTransfers(accountNumber, pageable)
+                .map(transferMapper :: toTransferResource);
+
+        return ResponseEntity.ok(transferResources);
     }
 
 
