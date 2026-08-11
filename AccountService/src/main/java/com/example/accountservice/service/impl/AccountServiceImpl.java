@@ -201,6 +201,9 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(readOnly = true)
     public List<AccountModel> getUserAccounts(Long userId) {
 
+        log.info("Checking User Validity");
+        UserModel userModel = customerClient.getUserInfo(userId);
+        
         log.info("Getting all User Accounts");
         List<AccountEntity> userAccounts = accountRepository.findAllByUserId(userId);
 
@@ -208,6 +211,4 @@ public class AccountServiceImpl implements AccountService {
                 map(accountMapper::toAccountModel)
                 .toList();
     }
-
-
 }

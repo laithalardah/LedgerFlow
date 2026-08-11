@@ -78,6 +78,8 @@ public class TransferServiceImpl implements TransferService {
 
         transferCommandPublisher.Publish(processTransferCommand);
 
+        //publish to Transaction History Service
+
         return transferMapper.toTransferModel(transferEntity);
     }
 

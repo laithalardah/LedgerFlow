@@ -27,7 +27,7 @@ public class CustomerClient {
             return restTemplate.getForObject(customer_service_url , UserModel.class);
         }
         catch (HttpClientErrorException.NotFound e) {
-            throw new UserNotFoundException("error trying to get user info");
+            throw new UserNotFoundException("Error Trying to Get User Info");
         }
         catch (RestClientException e) {
             throw new CustomerServiceUnavailableException(
