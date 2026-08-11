@@ -20,7 +20,7 @@ import org.springframework.data.domain.Pageable;
 
 @Slf4j
 @RestController
-@RequestMapping("/trasnfers")
+@RequestMapping("/transfers")
 public class TransferController {
 
     private final TransferMapper transferMapper;
@@ -76,6 +76,5 @@ public class TransferController {
 
         return ResponseEntity.ok(transferResources);
     }
-
 
 }
