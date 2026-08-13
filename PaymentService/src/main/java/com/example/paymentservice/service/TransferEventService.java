@@ -1,5 +1,6 @@
 package com.example.paymentservice.service;
 
+import com.example.paymentservice.messaging.event.TransactionUpdated;
 import com.example.paymentservice.messaging.event.TransferCompleted;
 import com.example.paymentservice.messaging.event.TransferFailed;
 

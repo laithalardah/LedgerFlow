@@ -8,16 +8,17 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class TransferCommandPublisher {
+public class TransferPublisher {
 
     private final JmsTemplate jmsTemplate;
     @Value("${process-trasnfer-queue}")
-    String QueueName;
-    public TransferCommandPublisher(JmsTemplate jmsTemplate) {
+    private String QueueName;
+    public TransferPublisher(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
     }
 
-    public void Publish(ProcessTransferCommand processTransferCommand) {
+    public void publish(ProcessTransferCommand processTransferCommand) {
+
 
         log.info("Publishing to Queue to Process Transfer With ID :" + processTransferCommand.transferId());
 

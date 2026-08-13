@@ -1,5 +1,6 @@
 package com.example.transactionhistoryservice.client;
 
+import com.example.transactionhistoryservice.exception.AccountServiceNotAvailable;
 import com.example.transactionhistoryservice.exception.InvalidUserException;
 import com.example.transactionhistoryservice.model.AccountModel;
 import org.springframework.core.ParameterizedTypeReference;
@@ -38,7 +39,7 @@ public class AccountClient {
             throw new InvalidUserException("User Not Found");
         }
         catch (RestClientException e) {
-            throw new RuntimeException("Account Service Currently Not Available");
+            throw new AccountServiceNotAvailable("Account Service Currently Not Available");
         }
 
     }

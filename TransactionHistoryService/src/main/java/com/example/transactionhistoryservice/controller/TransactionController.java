@@ -1,8 +1,7 @@
 package com.example.transactionhistoryservice.controller;
 
 import com.example.transactionhistoryservice.mapper.TransactionMapper;
-import com.example.transactionhistoryservice.model.TransactionModel;
-import com.example.transactionhistoryservice.resource.response.TransactionResource;
+import com.example.transactionhistoryservice.resource.TransactionResource;
 import com.example.transactionhistoryservice.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;

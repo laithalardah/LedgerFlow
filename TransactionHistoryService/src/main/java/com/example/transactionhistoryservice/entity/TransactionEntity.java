@@ -1,5 +1,6 @@
 package com.example.transactionhistoryservice.entity;
 
+import com.example.transactionhistoryservice.enums.ReferenceType;
 import com.example.transactionhistoryservice.enums.Status;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,6 +15,11 @@ public class TransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(value = EnumType.STRING)
+    private ReferenceType referenceType;
+
+    private Long referenceId;
 
     private Long debtorAccountNumber;
 

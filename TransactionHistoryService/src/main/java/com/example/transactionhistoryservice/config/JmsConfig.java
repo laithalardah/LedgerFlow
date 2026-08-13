@@ -1,5 +1,7 @@
 package com.example.transactionhistoryservice.config;
 
+import com.example.transactionhistoryservice.messaging.event.TransactionCreated;
+import com.example.transactionhistoryservice.messaging.event.TransactionUpdated;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.support.converter.JacksonJsonMessageConverter;
@@ -19,11 +21,13 @@ public class JmsConfig {
 
         converter.setTypeIdPropertyName("_type");
 
-//        converter.setTypeIdMappings(Map.of(
-//                "process-transfer", ProcessTransferCommand.class,
-//                "transfer-completed", TransferCompleted.class,
-//                "transfer-failed", TransferFailed.class
-//        ));
+        converter.setTypeIdPropertyName("_type");
+
+        converter.setTypeIdMappings(Map.of(
+                "transaction-created" , TransactionCreated.class,
+                "transaction-updated" , TransactionUpdated.class
+        ));
+
 
         return converter;
     }

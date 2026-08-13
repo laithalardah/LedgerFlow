@@ -7,12 +7,14 @@ import com.example.paymentservice.entity.TransferEntity;
 import com.example.paymentservice.exception.InvalidTransferException;
 import com.example.paymentservice.exception.DuplicateRequestException;
 import com.example.paymentservice.mapper.TransferMapper;
-import com.example.paymentservice.messaging.TransferCommandPublisher;
+import com.example.paymentservice.messaging.TransferPublisher;
+import com.example.paymentservice.messaging.event.TransactionCreated;
 import com.example.paymentservice.model.TransferCreationModel;
 import com.example.paymentservice.model.TransferModel;
 import com.example.paymentservice.repository.IdempotentKeyRepository;
 import com.example.paymentservice.repository.TransferRepository;
 import com.example.paymentservice.service.AccountValidationService;
+import com.example.paymentservice.service.TransactionEventService;
 import com.example.paymentservice.service.TransferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,20 +30,21 @@ public class TransferServiceImpl implements TransferService {
     private final AccountValidationService accountValidationService;
     private final IdempotentKeyRepository idempotentKeyRepository;
     private final TransferMapper transferMapper;
-    private final TransferCommandPublisher transferCommandPublisher;
+    private final TransferPublisher transferPublisher;
+    private final TransactionEventService transactionEventService;
 
     public TransferServiceImpl(TransferRepository transferRepository,
                                AccountValidationService accountValidationService,
                                TransferMapper transferMapper,
                                IdempotentKeyRepository idempotentKeyRepository ,
-                               TransferCommandPublisher transferCommandPublisher) {
+                               TransferPublisher transferPublisher, TransactionEventService transactionEventService) {
 
         this.transferRepository = transferRepository;
         this.accountValidationService = accountValidationService;
         this.transferMapper = transferMapper;
         this.idempotentKeyRepository = idempotentKeyRepository;
-        this.transferCommandPublisher = transferCommandPublisher;
-
+        this.transferPublisher = transferPublisher;
+        this.transactionEventService = transactionEventService;
     }
 
 
@@ -76,9 +79,19 @@ public class TransferServiceImpl implements TransferService {
                 transferEntity.getAmount()
         );
 
-        transferCommandPublisher.Publish(processTransferCommand);
 
-        //publish to Transaction History Service
+
+        transferPublisher.publish(processTransferCommand);
+
+        TransactionCreated transactionCreated = new TransactionCreated(
+                transferEntity.getId(),
+                "Transfer",
+                transferEntity.getDebtorAccountNumber(),
+                transferEntity.getCreditorAccountNumber(),
+                transferEntity.getAmount()
+        );
+
+        transactionEventService.handleTransactionCreated(transactionCreated);
 
         return transferMapper.toTransferModel(transferEntity);
     }

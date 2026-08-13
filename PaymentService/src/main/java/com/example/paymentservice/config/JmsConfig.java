@@ -1,6 +1,8 @@
 package com.example.paymentservice.config;
 
 import com.example.paymentservice.messaging.command.ProcessTransferCommand;
+import com.example.paymentservice.messaging.event.TransactionCreated;
+import com.example.paymentservice.messaging.event.TransactionUpdated;
 import com.example.paymentservice.messaging.event.TransferCompleted;
 import com.example.paymentservice.messaging.event.TransferFailed;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +27,9 @@ public class JmsConfig {
         converter.setTypeIdMappings(Map.of(
                 "process-transfer", ProcessTransferCommand.class,
                 "transfer-completed", TransferCompleted.class,
-                "transfer-failed", TransferFailed.class
+                "transfer-failed", TransferFailed.class,
+                "transaction-created" , TransactionCreated.class,
+                "transaction-updated" , TransactionUpdated.class
         ));
 
         return converter;

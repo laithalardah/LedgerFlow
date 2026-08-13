@@ -1,4 +1,4 @@
-package com.example.transactionhistoryservice.resource.response;
+package com.example.transactionhistoryservice.resource;
 
 import com.example.transactionhistoryservice.enums.Status;
 

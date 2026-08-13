@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class TransferEventConsumer {
+public class TransferConsumer {
 
     private final TransferEventService transferEventService;
 
-    public TransferEventConsumer(TransferEventService transferEventService) {
+    public TransferConsumer(TransferEventService transferEventService) {
         this.transferEventService = transferEventService;
     }
 
