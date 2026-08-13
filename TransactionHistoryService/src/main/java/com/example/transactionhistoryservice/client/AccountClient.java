@@ -25,7 +25,7 @@ public class AccountClient {
     }
 
     public List<AccountModel> getUserAccounts(Long id) {
-        String endpoint = ACCOUNT_SERVICE_URL_PREFIX + "/" + id;
+        String endpoint = ACCOUNT_SERVICE_URL_PREFIX + "/accounts/" + id;
 
         try {
             return restTemplate.exchange(
