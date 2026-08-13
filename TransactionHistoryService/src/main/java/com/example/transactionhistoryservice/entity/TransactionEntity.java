@@ -30,5 +30,5 @@ public class TransactionEntity {
     private LocalDateTime localDateTime = LocalDateTime.now();
 
     @Enumerated(value = EnumType.STRING)
-    private Status status = Status.Pending;
+    private Status status = Status.PENDING;
 }

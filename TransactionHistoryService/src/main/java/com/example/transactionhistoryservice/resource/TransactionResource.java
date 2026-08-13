@@ -1,5 +1,6 @@
 package com.example.transactionhistoryservice.resource;
 
+import com.example.transactionhistoryservice.enums.ReferenceType;
 import com.example.transactionhistoryservice.enums.Status;
 
 import java.math.BigDecimal;
@@ -7,6 +8,8 @@ import java.time.LocalDateTime;
 
 public record TransactionResource(
         Long id,
+        ReferenceType referenceType,
+        Long referenceId,
         Long debtorAccountNumber,
         Long creditorAccountNumber,
         BigDecimal amount,
