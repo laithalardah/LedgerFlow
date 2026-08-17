@@ -21,8 +21,6 @@ public class JmsConfig {
 
         converter.setTypeIdPropertyName("_type");
 
-        converter.setTypeIdPropertyName("_type");
-
         converter.setTypeIdMappings(Map.of(
                 "transaction-created" , TransactionCreated.class,
                 "transaction-updated" , TransactionUpdated.class
