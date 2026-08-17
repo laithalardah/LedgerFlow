@@ -3,6 +3,7 @@ package com.example.paymentservice.service.impl;
 import com.example.paymentservice.entity.TransferEntity;
 import com.example.paymentservice.enums.Status;
 import com.example.paymentservice.exception.InvalidTransferException;
+import com.example.paymentservice.exception.TransferNotFoundException;
 import com.example.paymentservice.messaging.event.TransactionUpdated;
 import com.example.paymentservice.messaging.event.TransferCompleted;
 import com.example.paymentservice.messaging.event.TransferFailed;
@@ -30,7 +31,7 @@ public class TransferEventServiceImpl implements TransferEventService {
 
         TransferEntity transferEntity = transferRepository.findById(id)
                 .orElseThrow(() ->
-                        new InvalidTransferException("Transfer Does Not Exist Anymore For Some Reason lol"));
+                        new TransferNotFoundException("Transfer Does Not Exist"));
 
 
         transferEntity.setStatus(Status.COMPLETE);
@@ -53,7 +54,7 @@ public class TransferEventServiceImpl implements TransferEventService {
 
         TransferEntity transferEntity = transferRepository.findById(id)
                 .orElseThrow(() ->
-                        new InvalidTransferException("Transfer Does Not Exist Anymore For Some Reason lol"));
+                        new TransferNotFoundException("Transfer Does Not Exist"));
 
 
         transferEntity.setStatus(Status.FAILED);

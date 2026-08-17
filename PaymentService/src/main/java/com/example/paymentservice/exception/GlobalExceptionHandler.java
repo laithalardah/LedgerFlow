@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidTransferException.class)
     public ResponseEntity<ErrorResponse> handleInvalidTransfer(InvalidTransferException ex) {
         ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_ACCEPTABLE.value(),
+                HttpStatus.BAD_REQUEST.value(),
                 "Transfer Not Valid",
                 ex.getMessage()
         );
