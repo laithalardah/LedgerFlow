@@ -27,7 +27,7 @@ public class TransactionEntity {
 
     private BigDecimal amount;
 
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime localDateTime;
 
     @Enumerated(value = EnumType.STRING)
     private Status status = Status.PENDING;

@@ -22,6 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Service
 public class TransferServiceImpl implements TransferService {
@@ -88,7 +90,8 @@ public class TransferServiceImpl implements TransferService {
                 "Transfer",
                 transferEntity.getDebtorAccountNumber(),
                 transferEntity.getCreditorAccountNumber(),
-                transferEntity.getAmount()
+                transferEntity.getAmount(),
+                LocalDateTime.now()
         );
 
         transactionEventService.handleTransactionCreated(transactionCreated);
