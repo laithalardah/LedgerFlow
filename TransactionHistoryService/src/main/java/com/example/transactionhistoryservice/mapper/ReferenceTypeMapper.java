@@ -2,11 +2,9 @@ package com.example.transactionhistoryservice.mapper;
 
 import com.example.transactionhistoryservice.enums.ReferenceType;
 import com.example.transactionhistoryservice.exception.InvalidReferenceType;
-import com.example.transactionhistoryservice.exception.InvalidUserException;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
-import java.util.Map;
 
 @Component
 public class ReferenceTypeMapper {
