@@ -1,6 +1,7 @@
 package com.example.paymentservice.service.impl;
 
 import com.example.paymentservice.enums.Status;
+import com.example.paymentservice.exception.CurrencyMismatchException;
 import com.example.paymentservice.messaging.command.ProcessTransferCommand;
 import com.example.paymentservice.entity.IdempotentKey;
 import com.example.paymentservice.entity.TransferEntity;
@@ -9,6 +10,7 @@ import com.example.paymentservice.exception.DuplicateRequestException;
 import com.example.paymentservice.mapper.TransferMapper;
 import com.example.paymentservice.messaging.TransferPublisher;
 import com.example.paymentservice.messaging.event.TransactionCreated;
+import com.example.paymentservice.model.AccountModel;
 import com.example.paymentservice.model.TransferCreationModel;
 import com.example.paymentservice.model.TransferModel;
 import com.example.paymentservice.repository.IdempotentKeyRepository;
@@ -62,8 +64,15 @@ public class TransferServiceImpl implements TransferService {
         if(transferCreationModel.debtorAccountNumber().equals(transferCreationModel.creditorAccountNumber()))
             throw new InvalidTransferException("Can Not Transfer to the Same Account");
 
-        accountValidationService.validateAccount(transferCreationModel.debtorAccountNumber());
-        accountValidationService.validateAccount(transferCreationModel.creditorAccountNumber());
+        AccountModel debtorAccount = accountValidationService.validateAccount(
+                transferCreationModel.debtorAccountNumber());
+
+        AccountModel creditorAccount = accountValidationService.validateAccount(
+                transferCreationModel.creditorAccountNumber());
+
+        if(!debtorAccount.currency().equals(creditorAccount.currency()))
+            throw new CurrencyMismatchException(debtorAccount.currency().toString() + " "
+                    + creditorAccount.currency().toString() + " Does Not Match");
 
         accountValidationService.validateBalance(transferCreationModel.debtorAccountNumber() ,
                 transferCreationModel.amount());

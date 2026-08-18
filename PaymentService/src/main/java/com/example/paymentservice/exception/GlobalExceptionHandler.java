@@ -86,6 +86,26 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CurrencyMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleCurrencyMismatch(CurrencyMismatchException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "Transfer Accounts Currency Mismatch",
+                ex.getMessage()
+        );
 
+        return new ResponseEntity<>(error , HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BalanceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleBalanceNotFound(BalanceNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                "Returned Balance Not Found",
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<>(error , HttpStatus.NOT_FOUND);
+    }
 
 }
