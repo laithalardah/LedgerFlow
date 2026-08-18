@@ -17,6 +17,8 @@ public class IdempotentKey {
 
     private final LocalDateTime createdAt = LocalDateTime.now();
 
+    private final LocalDateTime expiresAt = LocalDateTime.now().plusHours(24);
+
     public IdempotentKey(Long requestKey) {
         this.requestKey = requestKey;
     }
