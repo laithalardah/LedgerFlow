@@ -22,18 +22,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error , HttpStatus.SERVICE_UNAVAILABLE);
     }
 
-
-    @ExceptionHandler(DuplicateRequestException.class)
-    public ResponseEntity<ErrorResponse> handleDuplicateRequest(DuplicateRequestException ex) {
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                "Request Already Made",
-                ex.getMessage()
-        );
-
-        return new ResponseEntity<>(error , HttpStatus.CONFLICT);
-    }
-
     @ExceptionHandler(InsufficientBalanceException.class)
     public ResponseEntity<ErrorResponse> handleInsufficientBalance(InsufficientBalanceException ex) {
         ErrorResponse error = new ErrorResponse(
