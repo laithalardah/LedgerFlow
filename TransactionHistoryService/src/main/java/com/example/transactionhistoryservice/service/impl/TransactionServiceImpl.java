@@ -15,7 +15,9 @@ import com.example.transactionhistoryservice.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -42,6 +44,11 @@ public class TransactionServiceImpl implements TransactionService {
     public void createTransaction(TransactionCreated transactionCreated){
         TransactionEntity transactionEntity =
                 transactionMapper.toTransactionEntity(transactionCreated);
+
+        if(transactionRepository.findByReferenceIdAndReferenceType(
+                transactionEntity.getReferenceId() ,
+                transactionEntity.getReferenceType())
+                .isPresent()) return;
 
         log.info("Transaction Created");
         transactionEntity.setReferenceType(referenceTypeMapper.toReferenceType((transactionCreated).referenceType()));
@@ -73,14 +80,20 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TransactionModel> getUserTransactionHistory(Long userId) {
+    public Page<TransactionModel> getUserTransactionHistory(Long userId , Pageable pageable) {
 
         log.info("Fetching User Account Numbers...");
-        List<Long> userAccountNumbers =  accountClient.getUserAccounts(userId).stream().
-                map(AccountModel::accountNumber).toList();
+        List<AccountModel> userAccountModels = accountClient.getUserAccounts(userId);
+
+        List<Long> userAccountNumbers = (userAccountModels != null ? userAccountModels :Collections.<AccountModel>emptyList())
+                .stream()
+                .map(AccountModel::accountNumber)
+                .toList();
+
+        if(userAccountNumbers.isEmpty()) return Page.empty(pageable);
 
         log.info("Returning User Transactions...");
-        return transactionRepository.findByDebtorAccountNumberIn(userAccountNumbers).stream().
-                map(transactionMapper::toTransactionModel).toList();
+        return transactionRepository.findByDebtorAccountNumberInOrCreditorAccountNumberIn(userAccountNumbers,
+                        userAccountNumbers , pageable).map(transactionMapper::toTransactionModel);
     }
 }

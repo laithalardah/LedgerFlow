@@ -31,7 +31,7 @@ public class AccountController {
     private final AccountMapper accountMapper;
     private final UserMapper userMapper;
 
-    AccountController (AccountServiceImpl accountService , AccountMapper accountMapper, UserMapper userMapper) {
+    AccountController (AccountService accountService , AccountMapper accountMapper, UserMapper userMapper) {
         this.accountService = accountService;
         this.accountMapper = accountMapper;
         this.userMapper = userMapper;
