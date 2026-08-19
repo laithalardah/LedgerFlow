@@ -85,6 +85,8 @@ public class TransactionServiceImpl implements TransactionService {
                 .map(AccountModel::accountNumber)
                 .toList();
 
+        if(userAccountNumbers.isEmpty()) return Page.empty(pageable);
+
         log.info("Returning User Transactions...");
         return transactionRepository.findByDebtorAccountNumberInOrCreditorAccountNumberIn(userAccountNumbers,
                         userAccountNumbers , pageable).map(transactionMapper::toTransactionModel);
