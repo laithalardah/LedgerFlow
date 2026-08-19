@@ -1,25 +1,35 @@
 package com.example.paymentservice.entity;
 
+import com.example.paymentservice.model.TransferModel;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Entity
 @Table(name = "idempotent_keys")
-public class IdempotentKey {
+@Data
+public class IdempotencyRecord {
 
     @Id
-    private Long requestKey;
+    private UUID key;
+
+    private int statusCode;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "jsonb")
+    private TransferModel responseBody;
 
     private final LocalDateTime createdAt = LocalDateTime.now();
 
     private final LocalDateTime expiresAt = LocalDateTime.now().plusHours(24);
 
-    public IdempotentKey(Long requestKey) {
-        this.requestKey = requestKey;
-    }
 }

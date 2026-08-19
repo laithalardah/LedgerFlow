@@ -17,6 +17,8 @@ import com.example.paymentservice.resource.TransferCreationResource;
 import com.example.paymentservice.resource.TransferResource;
 import org.springframework.data.domain.Pageable;
 
+import java.util.UUID;
+
 
 @Slf4j
 @RestController
@@ -34,7 +36,7 @@ public class TransferController {
     @Operation(description = "Creates a New Transfer , requires Idempotency key with Headers")
     @PostMapping("/")
     public ResponseEntity<TransferResource> createTransfer(@RequestBody @Valid TransferCreationResource transferCreationResource ,
-                                                           @RequestHeader("x-Idemptoency-key") Long key) {
+                                                           @RequestHeader("x-Idemptoency-key") UUID key) {
 
         log.info("Create Transfer Endpoint Invoked");
         TransferCreationModel transferCreationModel = transferMapper.toTransferCreationModel(transferCreationResource);

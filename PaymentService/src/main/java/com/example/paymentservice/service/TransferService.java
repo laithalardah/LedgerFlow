@@ -6,9 +6,11 @@ import com.example.paymentservice.model.TransferModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.UUID;
+
 public interface TransferService {
 
-    TransferModel createTransfer(TransferCreationModel transferCreationModel , Long key);
+    TransferModel createTransfer(TransferCreationModel transferCreationModel , UUID requestKey);
 
     Status getTransferStatus(Long id);
 
