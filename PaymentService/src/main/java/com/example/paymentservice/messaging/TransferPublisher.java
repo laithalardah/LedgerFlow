@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TransferPublisher {
 
     private final JmsTemplate jmsTemplate;
-    @Value("${process-trasnfer-queue}")
+    @Value("${process-transfer-queue}")
     private String QueueName;
     public TransferPublisher(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;

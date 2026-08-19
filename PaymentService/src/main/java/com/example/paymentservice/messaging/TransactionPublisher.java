@@ -4,7 +4,6 @@ import com.example.paymentservice.messaging.event.TransactionCreated;
 import com.example.paymentservice.messaging.event.TransactionUpdated;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

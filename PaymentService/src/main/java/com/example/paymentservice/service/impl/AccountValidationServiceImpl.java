@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Service
 public class AccountValidationServiceImpl implements AccountValidationService {
 
-    public final AccountClient accountClient;
+    private final AccountClient accountClient;
 
     public AccountValidationServiceImpl(AccountClient accountClient) {
         this.accountClient = accountClient;
