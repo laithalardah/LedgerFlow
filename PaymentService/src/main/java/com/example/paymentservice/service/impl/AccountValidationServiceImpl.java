@@ -7,7 +7,6 @@ import com.example.paymentservice.model.AccountModel;
 import com.example.paymentservice.service.AccountValidationService;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
 
 @Service
