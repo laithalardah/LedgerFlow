@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(TransactionNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleAccountServiceNotAvailable(TransactionNotFoundException e) {
+    public ResponseEntity<ErrorResponse> handleTransactionNotFound(TransactionNotFoundException e) {
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 "Transaction Not Found",
