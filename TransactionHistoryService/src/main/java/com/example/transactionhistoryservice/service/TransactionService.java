@@ -3,8 +3,8 @@ package com.example.transactionhistoryservice.service;
 import com.example.transactionhistoryservice.messaging.event.TransactionCreated;
 import com.example.transactionhistoryservice.messaging.event.TransactionUpdated;
 import com.example.transactionhistoryservice.model.TransactionModel;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TransactionService {
 
@@ -12,5 +12,5 @@ public interface TransactionService {
 
     void updateTransaction(TransactionUpdated transactionUpdated);
 
-    List<TransactionModel> getUserTransactionHistory(Long userId);
+    Page<TransactionModel> getUserTransactionHistory(Long userId , Pageable pageable);
 }
