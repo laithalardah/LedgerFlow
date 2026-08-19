@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 public interface TransactionMapper {
 
     @Mapping(target = "referenceType" ,ignore = true)
+    @Mapping(target = "localDateTime" , source = "createdAt")
     TransactionEntity toTransactionEntity(TransactionCreated transactionCreated);
 
     TransactionModel toTransactionModel(TransactionEntity transactionEntity);
