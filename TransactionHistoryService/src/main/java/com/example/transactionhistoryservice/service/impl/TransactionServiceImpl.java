@@ -43,6 +43,11 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionEntity transactionEntity =
                 transactionMapper.toTransactionEntity(transactionCreated);
 
+        if(transactionRepository.findByReferenceIdAndReferenceType(
+                transactionEntity.getReferenceId() ,
+                transactionEntity.getReferenceType())
+                .isPresent()) return;
+
         log.info("Transaction Created");
         transactionEntity.setReferenceType(referenceTypeMapper.toReferenceType((transactionCreated).referenceType()));
 
