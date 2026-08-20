@@ -49,7 +49,7 @@
 
 
     <changeSet id="Created_Index_For_Expires_At" author="laithalardah">
-        <createIndex tableName="idempotent_keys" indexName="idx_idempotent_keys_expires_at">
+        <createIndex tableName="idempotency_record" indexName="idx_idempotent_keys_expires_at">
             <column name="expires_at"/>
         </createIndex>
     </changeSet>

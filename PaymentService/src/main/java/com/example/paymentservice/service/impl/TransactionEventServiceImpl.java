@@ -1,6 +1,5 @@
 package com.example.paymentservice.service.impl;
 
-import com.example.paymentservice.entity.TransferEntity;
 import com.example.paymentservice.messaging.TransactionPublisher;
 import com.example.paymentservice.messaging.event.TransactionCreated;
 import com.example.paymentservice.messaging.event.TransactionUpdated;

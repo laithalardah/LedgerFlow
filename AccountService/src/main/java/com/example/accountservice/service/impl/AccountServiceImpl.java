@@ -1,16 +1,15 @@
 package com.example.accountservice.service.impl;
 
-import com.example.accountservice.messaging.command.ProcessTransferCommand;
+import com.example.accountservice.client.CustomerClient;
 import com.example.accountservice.entity.AccountEntity;
-import com.example.accountservice.messaging.event.TransferCompleted;
-import com.example.accountservice.messaging.event.TransferFailed;
 import com.example.accountservice.exception.AccountNotFoundException;
 import com.example.accountservice.exception.InsufficientBalanceException;
-import com.example.accountservice.exception.InvalidAmountArgumentException;
 import com.example.accountservice.mapper.AccountMapper;
 import com.example.accountservice.mapper.CurrencyMapper;
-import com.example.accountservice.client.CustomerClient;
 import com.example.accountservice.messaging.TransferEventPublisher;
+import com.example.accountservice.messaging.command.ProcessTransferCommand;
+import com.example.accountservice.messaging.event.TransferCompleted;
+import com.example.accountservice.messaging.event.TransferFailed;
 import com.example.accountservice.model.AccountCreationModel;
 import com.example.accountservice.model.AccountModel;
 import com.example.accountservice.model.UserModel;
@@ -19,8 +18,8 @@ import com.example.accountservice.resource.request.AmountRequest;
 import com.example.accountservice.resource.response.AccountValidationResponse;
 import com.example.accountservice.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Currency;

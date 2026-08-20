@@ -1,16 +1,18 @@
 package com.example.paymentservice.service.impl;
 
+import com.example.paymentservice.enums.Status;
 import com.example.paymentservice.messaging.TransactionPublisher;
 import com.example.paymentservice.messaging.event.TransactionCreated;
 import com.example.paymentservice.messaging.event.TransactionUpdated;
-import com.example.paymentservice.enums.Status;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
