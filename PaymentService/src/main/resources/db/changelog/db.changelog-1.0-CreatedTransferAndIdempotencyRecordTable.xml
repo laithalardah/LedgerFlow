@@ -7,7 +7,7 @@
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
 
 
-    <changeSet id="1787146842000-4" author="laithalardah">
+    <changeSet id="Created_Transfer_Table" author="laithalardah">
         <createTable tableName="transfers">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_transfers"/>
@@ -27,8 +27,8 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="1787146842000-5" author="laithalardah">
-        <createTable tableName="idempotent_keys">
+    <changeSet id="Created_Idempotency_Record_Table" author="laithalardah">
+        <createTable tableName="idempotency_record">
             <column name="key" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_idempotent_keys"/>
             </column>
@@ -48,7 +48,7 @@
     </changeSet>
 
 
-    <changeSet id="1787146842000-8" author="laithalardah">
+    <changeSet id="Created_Index_For_Expires_At" author="laithalardah">
         <createIndex tableName="idempotent_keys" indexName="idx_idempotent_keys_expires_at">
             <column name="expires_at"/>
         </createIndex>

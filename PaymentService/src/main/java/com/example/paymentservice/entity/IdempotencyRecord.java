@@ -15,7 +15,6 @@ import java.util.UUID;
 
 @NoArgsConstructor
 @Entity
-@Table(name = "idempotent_keys")
 @Data
 public class IdempotencyRecord {
 
